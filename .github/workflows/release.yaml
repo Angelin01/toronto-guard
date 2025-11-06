@@ -24,7 +24,7 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - name: Install Dependencies
         run: |
-          sudo apt-get install -yqq crossbuild-essential-arm64 crossbuild-essential-armhf musl-tools
+          sudo apt-get update && sudo apt-get install -yqq crossbuild-essential-arm64 crossbuild-essential-armhf musl-tools
 
           cat > ~/.cargo/config.toml <<EOF
           [target.aarch64-unknown-linux-gnu]
