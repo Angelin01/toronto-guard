@@ -44,7 +44,7 @@ pub struct LogConfig {
 impl Default for LogConfig {
     fn default() -> Self {
         LogConfig {
-            filter: "gjallarbot=info".into(),
+            filter: "toronto-guard=info".into(),
         }
     }
 }
