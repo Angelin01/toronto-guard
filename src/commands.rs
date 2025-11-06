@@ -34,7 +34,8 @@ async fn get_mason_member(
     slash_command,
     rename = "disconnect-mason",
     required_bot_permissions = "MOVE_MEMBERS",
-    user_cooldown = 30
+    user_cooldown = 30,
+    guild_only = true,
 )]
 pub async fn disconnect_mason(ctx: Context<'_>) -> Result<(), BotError> {
     let (guild_id, mason_member) = match get_mason_member(ctx).await {
@@ -78,7 +79,8 @@ pub async fn disconnect_mason(ctx: Context<'_>) -> Result<(), BotError> {
     slash_command,
     rename = "mute-mason",
     required_bot_permissions = "MUTE_MEMBERS",
-    user_cooldown = 30
+    user_cooldown = 30,
+    guild_only = true,
 )]
 pub async fn mute_mason(ctx: Context<'_>) -> Result<(), BotError> {
     let (_, mut mason_member) = match get_mason_member(ctx).await {
