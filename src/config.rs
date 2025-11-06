@@ -33,7 +33,7 @@ pub struct BotConfig {
 
 #[derive(Deserialize)]
 pub struct MasonConfig {
-    user_id: UserId
+    pub user_id: UserId
 }
 
 #[derive(Deserialize)]
