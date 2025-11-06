@@ -1,0 +1,19 @@
+[package]
+name = "toronto-guard"
+description = "A Discord bot to moderate Mason"
+keywords = ["discord", "bot"]
+repository = "https://github.com/Angelin01/toronto-guard"
+license = "MIT"
+version = "0.0.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.*"
+figment = { version = "0.10.*", default-features = false, features = ["env", "toml"] }
+log = "0.4.*"
+poise = { version = "0.6.*", default-features = false, features = ["chrono"] }
+secrecy = { version = "0.10.3", features = ["serde"] }
+serde = { version = "1.0.*", features = ["derive"] }
+serenity = { version = "0.12.*", default-features = false, features = ["chrono", "rustls_backend", "simd-json", "parking_lot"] }
+tokio = { version = "1.48.0", features = ["macros", "parking_lot", "rt-multi-thread", "signal"] }
+tracing-subscriber = { version = "0.3.*", features = ["parking_lot", "env-filter"] }
