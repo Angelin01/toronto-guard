@@ -64,12 +64,6 @@ pub async fn disconnect_mason(ctx: Context<'_>) -> Result<(), BotError> {
         return Err(err.into());
     }
 
-    if let Err(err) = mason_member.disconnect_from_voice(ctx).await {
-        ctx.reply("I couldn't disconnect Mason. Maybe I lack permissions.")
-            .await?;
-        return Err(err.into());
-    }
-
     ctx.reply(format!("Disconnected Mason from guild `{guild_id}`."))
         .await?;
     Ok(())
