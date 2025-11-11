@@ -1,12 +1,21 @@
 use crate::bot::{BotError, BotState, Context};
+use crate::config::Config;
 use poise::serenity_prelude as serenity;
 use poise::Command;
 use serenity::EditMember;
 use std::time::Duration;
 use tokio::time::sleep;
 
-pub fn commands() -> Vec<Command<BotState, BotError>> {
-    vec![disconnect_mason(), mute_mason()]
+pub fn commands(config: &Config) -> Vec<Command<BotState, BotError>> {
+    let mut commands = vec![disconnect_mason(), mute_mason()];
+
+    for cmd in commands.iter_mut() {
+        let mut write = cmd.cooldown_config.write().expect("lock failed");
+        write.global = Some(Duration::from_secs(config.mason.global_cooldown_sec));
+        write.user = Some(Duration::from_secs(config.mason.user_cooldown_sec));
+    }
+
+    commands
 }
 
 async fn get_mason_member(
@@ -34,7 +43,6 @@ async fn get_mason_member(
     slash_command,
     rename = "disconnect-mason",
     required_bot_permissions = "MOVE_MEMBERS",
-    user_cooldown = 30,
     guild_only = true,
 )]
 pub async fn disconnect_mason(ctx: Context<'_>) -> Result<(), BotError> {
@@ -73,7 +81,6 @@ pub async fn disconnect_mason(ctx: Context<'_>) -> Result<(), BotError> {
     slash_command,
     rename = "mute-mason",
     required_bot_permissions = "MUTE_MEMBERS",
-    user_cooldown = 30,
     guild_only = true,
 )]
 pub async fn mute_mason(ctx: Context<'_>) -> Result<(), BotError> {

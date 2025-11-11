@@ -31,9 +31,16 @@ pub struct BotConfig {
     pub token: SecretString,
 }
 
+fn default_user_cooldown() -> u64 { 600 }
+fn default_global_cooldown() -> u64 { 300 }
+
 #[derive(Deserialize)]
 pub struct MasonConfig {
-    pub user_id: UserId
+    pub user_id: UserId,
+    #[serde(default = "default_user_cooldown")]
+    pub user_cooldown_sec: u64,
+    #[serde(default = "default_global_cooldown")]
+    pub global_cooldown_sec: u64,
 }
 
 #[derive(Deserialize)]

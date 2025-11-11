@@ -6,7 +6,7 @@ A Discord bot to moderate Mason
 - Disconnect Mason: allows anyone to disconnect Mason from a voice channel
 - Mute Mason: allows anyone to mute Mason for 5 seconds
 
-Both commands have a 30 second cooldown, per user.
+By default, there is a cooldown between uses (see Configuring bellow) to let Mason actually function on Discord.
 
 ## Permissions
 
@@ -21,21 +21,25 @@ The bot has two configuration sources:
 
 Supported settings:
 
-| TOML Key        | Environment Variable | Description                                                                                          |
-|-----------------|----------------------|------------------------------------------------------------------------------------------------------|
-| -               | `TG_CONFIG_FILE`     | Overrides the default path for the configuration file.                                               |
-| `bot.token`     | `TG_bot_token`       | Discord bot token (required).                                                                        |
-| `mason.user_id` | `TG_mason_user_id`   | The Discord user ID of Mason (required). Get with right click, Copy User ID.                         |
-| `log.filter`    | `TG_log_filter`      | Logging filter (default: `"toronto-guard=info"`, see [env_logger’s documentation for more info][1]). |
+| TOML Key                    | Environment Variable           | Description                                                                                           |
+|-----------------------------|--------------------------------|-------------------------------------------------------------------------------------------------------|
+| -                           | `TG_CONFIG_FILE`               | Overrides the default path for the configuration file.                                                |
+| `bot.token`                 | `TG_bot_token`                 | Discord bot token (required).                                                                         |
+| `mason.user_id`             | `TG_mason_user_id`             | The Discord user ID of Mason (required). Get with right click, Copy User ID.                          |
+| `mason.user_cooldown_sec`   | `TG_mason_user_cooldown_sec`   | The cooldown between any use of a moderation command, tracked per user, per command. Defaults to 600. |
+| `mason.global_cooldown_sec` | `TG_mason_global_cooldown_sec` | The cooldown between any use of a moderation command, tracked per command only. Defaults to 300.      |
+| `log.filter`                | `TG_log_filter`                | Logging filter (default: `"toronto-guard=info"`, see [env_logger’s documentation for more info][1]).  |
 
 ### Example `toronto-guard.toml`
 
 ```toml
 [bot]
-token = "your-discord-bot-token"
+token = "your-discord-bot-token"  # Required
 
 [mason]
-user_id = "123456789012345678"
+user_id = "123456789012345678"  # Required
+user_cooldown_sec = 450
+global_cooldown_sec = 150
 
 [log]
 filter = "toronto-guard=debug"
