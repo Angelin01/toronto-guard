@@ -28,7 +28,7 @@ async fn build_framework(config: &Config) -> Result<Framework<BotState, BotError
     let mason_user_id = Arc::new(config.mason.user_id.clone());
     
     Ok(Framework::builder()
-        .options(framework_options())
+        .options(framework_options(config))
         .setup(|ctx, _, framework| {
             Box::pin(async move {
                 poise::builtins::register_globally(ctx, &framework.options().commands).await?;
@@ -40,9 +40,9 @@ async fn build_framework(config: &Config) -> Result<Framework<BotState, BotError
         .build())
 }
 
-fn framework_options() -> FrameworkOptions<BotState, BotError> {
+fn framework_options(config: &Config) -> FrameworkOptions<BotState, BotError> {
     FrameworkOptions {
-        commands: commands::commands(),
+        commands: commands::commands(config),
         on_error: |error| Box::pin(on_error(error)),
         initialize_owners: true,
         reply_callback: Some(log_replies),
